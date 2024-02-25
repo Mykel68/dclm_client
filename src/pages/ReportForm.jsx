@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const ReportForm = () => {
-
   const [formData, setFormData] = useState({
     date: '',
     serviceType: '',
@@ -19,6 +18,7 @@ const ReportForm = () => {
     solution: '',
     equipmentDetails: '',
     remarks: '',
+    location: '',
   });
 
   const handleInputChange = (e) => {
@@ -38,20 +38,19 @@ const ReportForm = () => {
     setShowSubOptions(false);
     setSubOptions([]); // Reset sub-options when service type changes
   };
+
   const handleSubOptionChange = (e) => {
-    
     const { value } = e.target;
-    setFormData({ ...formData, subOption: value });
+    setFormData({ ...formData, subServiceDay: value });
   };
-  
 
   const handleAdditionalOptionChange = (e) => {
     setShowSubOptions(true);
     // Set sub-options based on the selected additional option
-    if (e.target.value === 'Minister\'s Conference') {
-      setSubOptions(['Day 1', 'Day 2', 'Day 3']);
-    } else if (e.target.value === 'Crusade') {
+    if (e.target.value === 'Crusade') {
       setSubOptions(['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6']);
+    } else if (e.target.value === 'Minister\'s Conference') {
+      setSubOptions(['Day 1', 'Day 2', 'Day 3']);
     } else {
       // For other options, reset sub-options
       setShowSubOptions(false);
@@ -61,35 +60,37 @@ const ReportForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Check if all required fields are filled
     const requiredFields = ['date', 'section', 'supervisor', 'personnelCount', 'volunteersCount'];
     const isAnyFieldEmpty = requiredFields.some((field) => !formData[field]);
-  
+
     if (isAnyFieldEmpty) {
       toast.error('Please fill in all required fields');
       return;
     }
-  
+
     try {
-      const response = await axios.post('https://q61zr44g-5001.uks1.devtunnels.ms/api/submit-report', formData);
-  
+      const response = await axios.post('http://localhost:5001/api/submit-report', formData);
+
       if (response.status === 201) {
         toast.success('Report submitted successfully');
+        console.log(formData);
         // Reset form data after submission if needed
         setFormData({
           date: '',
-          serviceType: 'null',
-          subService: 'null',
-          subServiceDay: 'null',
-          section: 'null',
-          supervisor: 'null',
+          serviceType: '',
+          subService: '',
+          subServiceDay: '',
+          section: '',
+          supervisor: '',
           personnelCount: '0',
           volunteersCount: '0',
-          challenges: 'null',
-          solution: 'null',
-          equipmentDetails: 'null',
-          remarks: 'null',
+          challenges: '',
+          solution: '',
+          equipmentDetails: '',
+          remarks: '',
+          location: ' ',
         });
       } else {
         console.error('Error submitting report');
@@ -100,7 +101,6 @@ const ReportForm = () => {
       toast.error('An unexpected error occurred. Please try again later.');
     }
   };
-  
 
   return (
     <div className='bg'>
@@ -366,6 +366,19 @@ const ReportForm = () => {
                 aria-describedby="helpId" 
                 placeholder=""
                 value={formData.remarks}
+                onChange={handleInputChange}/>
+            </div>
+
+            <div className="form-group mb-3">
+              <label htmlFor="">Location:</label>
+              <input 
+                type="text"
+                className="form-control" 
+                name="location" 
+                id="" 
+                aria-describedby="helpId" 
+                placeholder=""
+                value={formData.location}
                 onChange={handleInputChange}/>
             </div>
 

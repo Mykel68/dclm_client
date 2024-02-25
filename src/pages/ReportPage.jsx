@@ -57,6 +57,7 @@ const ReportPage = () => {
                 <StyledTableCell>Solution</StyledTableCell>
                 <StyledTableCell>Faulty Equipment</StyledTableCell>
                 <StyledTableCell>Remark</StyledTableCell>
+                <StyledTableCell>Location</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -77,6 +78,7 @@ const ReportPage = () => {
                   <TableCell>{report.solution}</TableCell>
                   <TableCell>{report.equipmentDetails}</TableCell>
                   <TableCell>{report.remarks}</TableCell>
+                  <TableCell>{report.location}</TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -145,6 +147,9 @@ const ReportPage = () => {
                   </Typography>
                   <Typography color="textSecondary" gutterBottom>
                     Remarks: {selectedReport?.remarks}
+                  </Typography>
+                  <Typography color="textSecondary" gutterBottom>
+                    Location: {selectedReport?.location}
                   </Typography>
                 </CardContent>
               </Card>

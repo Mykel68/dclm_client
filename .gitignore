@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/src/hooks
+.env
 
 # production
 /build
