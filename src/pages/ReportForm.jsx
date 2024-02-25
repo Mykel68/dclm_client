@@ -33,36 +33,38 @@ const ReportForm = () => {
 
   const handleServiceTypeChange = (e) => {
     e.preventDefault();
-    setServiceType(e.target.value);
-    setShowAdditionalOptions(e.target.value === 'Global Crusade With Kumuyi');
+    setServiceType(e.currentTarget.value); // Use e.currentTarget.value instead of e.target.value
+    setShowAdditionalOptions(e.currentTarget.value === 'Global Crusade With Kumuyi');
     setShowSubOptions(false);
-    setSubOptions([]); // Reset sub-options when service type changes
   };
-
-  const handleSubOptionChange = (e) => {
-    const { value } = e.target;
-    setFormData({ ...formData, subServiceDay: value });
-  };
-
+  
   const handleAdditionalOptionChange = (e) => {
     setShowSubOptions(true);
+    setFormData({ ...formData, additionalOption: e.currentTarget.value }); // Use e.currentTarget.value
     // Set sub-options based on the selected additional option
-    if (e.target.value === 'Crusade') {
-      setSubOptions(['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6']);
-    } else if (e.target.value === 'Minister\'s Conference') {
+    if (e.currentTarget.value === 'Minister\'s Conference') {
       setSubOptions(['Day 1', 'Day 2', 'Day 3']);
+    } else if (e.currentTarget.value === 'Crusade') {
+      setSubOptions(['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6']);
     } else {
       // For other options, reset sub-options
       setShowSubOptions(false);
       setSubOptions([]);
     }
   };
+  
+
+  const handleSubOptionChange = (e) => {
+    const { value } = e.target;
+    setFormData({ ...formData, subServiceDay: value });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if all required fields are filled
-    const requiredFields = ['date', 'section', 'supervisor', 'personnelCount', 'volunteersCount'];
+    const requiredFields = ['date', 'section', 'supervisor', 'personnelCount', 'volunteersCount', 'location'];
     const isAnyFieldEmpty = requiredFields.some((field) => !formData[field]);
 
     if (isAnyFieldEmpty) {
@@ -318,17 +320,19 @@ const ReportForm = () => {
             </div>
 
             <div className="form-group mb-3">
-              <label htmlFor="">Challenges Encountered: </label>
-              <input 
-                type="text"
-                className="form-control" 
-                name="challenges" 
-                id="" 
-                aria-describedby="helpId" 
-                placeholder=""
-                value={formData.challenges}
-                onChange={handleInputChange}/>
-            </div>
+            <label htmlFor="challenges">Challenges Encountered: </label>
+            <p>Explain in details</p>
+            <textarea
+              className="form-control"
+              name="challenges"
+              id="challenges"
+              rows="4" // You can adjust the number of rows as needed
+              style={{ resize: 'none' }}
+              placeholder=""
+              value={formData.challenges}
+              onChange={handleInputChange}
+            />
+          </div>
 
             <div className="form-group mb-3">
               <label htmlFor="">Solution Proposed: </label>
