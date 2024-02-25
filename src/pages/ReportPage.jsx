@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box} from '@mui/material';
 import Image from '../assets/logoo.jpg';
 import ReportDetailsModal from '../components/ReportDetailsModal'; 
+
 
 const ReportPage = () => {
   const [reports, setReports] = useState([]);
@@ -128,6 +129,15 @@ const ReportPage = () => {
                     Date: {selectedReport?.date}
                   </Typography>
                   <Typography color="textSecondary" gutterBottom>
+                    Service: {selectedReport?.serviceType}
+                  </Typography>
+                  {/* <Typography color="textSecondary" gutterBottom>
+                    Service Type: {selectedReport?.subService}
+                  </Typography>
+                  <Typography color="textSecondary" gutterBottom>
+                    Service Day: {selectedReport?.subServiceDay}
+                  </Typography> */}
+                  <Typography color="textSecondary" gutterBottom>
                     Section: {selectedReport?.section}
                   </Typography>
                   <Typography color="textSecondary" gutterBottom>
@@ -153,6 +163,10 @@ const ReportPage = () => {
                   </Typography>
                 </CardContent>
               </Card>
+              <div className="container mt-3 d-flex align-items-center justify-content-between">
+                  <div className="btn btn-primary">Edit</div>
+                  <div className="btn btn-danger">Delete</div>
+              </div>
             </Box>
           </Fade>
         </Modal>

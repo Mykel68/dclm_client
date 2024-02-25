@@ -378,7 +378,7 @@ const ReportForm = () => {
             </div>
 
             <div className="btn-container d-flex justify-content-center mt-3">
-              <button type="submit" className="btn btn-primary ">
+              <button type="submit" className="btn btn-primary btn-lg ">
                 Submit
               </button>
 
