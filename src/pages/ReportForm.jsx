@@ -137,7 +137,7 @@ const ReportForm = () => {
                   name="ServiceType" 
                   id="option1" 
                   value='Monday Bible Study' 
-{/*                   onChange={handleServiceTypeChange} */}
+                  onChange={handleServiceTypeChange}
                   checked={serviceType === 'Monday Bible Study'}
                 />
                 <label className="form-check-label" htmlFor="option1">Monday Bible Study</label>
@@ -149,7 +149,7 @@ const ReportForm = () => {
                   name="ServiceType" 
                   id="option2" 
                   value="Tuesday Leadership Development Training"
-{/*                   onChange={handleServiceTypeChange} */}
+                  onChange={handleServiceTypeChange}
                   checked={serviceType === 'Tuesday Leadership Development Training'}
                   />
                 <label className="form-check-label" htmlFor="option2">Tuesday Leadership Development Training
@@ -162,7 +162,7 @@ const ReportForm = () => {
                   name="ServiceType" 
                   id="option3" 
                   value="Thursday Power Night/ Revival Broadcast" 
-{/*                   onChange={handleServiceTypeChange} */}
+                  onChange={handleServiceTypeChange}
                   checked={serviceType === 'Thursday Power Night/ Revival Broadcast'}
                   />
                 <label className="form-check-label" htmlFor="option3">Thursday Power Night/ Revival Broadcast</label>
