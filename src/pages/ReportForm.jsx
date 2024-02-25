@@ -72,7 +72,7 @@ const ReportForm = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:5001/api/submit-report', formData);
+      const response = await axios.post('https://q61zr44g-5001.uks1.devtunnels.ms/api/submit-report', formData);
   
       if (response.status === 201) {
         toast.success('Report submitted successfully');

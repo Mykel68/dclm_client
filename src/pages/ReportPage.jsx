@@ -11,7 +11,7 @@ const ReportPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/fetch-reports');
+        const response = await axios.get('https://q61zr44g-5001.uks1.devtunnels.ms/api/fetch-reports');
         if (response.status === 200) {
           setReports(response.data.reverse());
         } else {
