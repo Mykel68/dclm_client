@@ -6,6 +6,8 @@ import ReportPage from './pages/ReportPage';
 // Add these lines in your JavaScript file
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Edit from './pages/Edit';
+import Login from './pages/Login';
 
 
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/" element={<ReportForm />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/edit" element={<Edit />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
   </BrowserRouter>
   );

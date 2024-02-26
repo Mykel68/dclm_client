@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box} from '@mui/material';
 import Image from '../assets/logoo.jpg';
 import ReportDetailsModal from '../components/ReportDetailsModal'; 
+// require('dotenv').config()
 
 
 const ReportPage = () => {
@@ -12,7 +14,7 @@ const ReportPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://q61zr44g-5001.uks1.devtunnels.ms/api/fetch-reports');
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/fetch-reports`);
         if (response.status === 200) {
           setReports(response.data.reverse());
         } else {
@@ -22,9 +24,10 @@ const ReportPage = () => {
         console.error('Error:', error);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   const openDetailsPopup = (report) => {
     setSelectedReport(report);
@@ -33,6 +36,21 @@ const ReportPage = () => {
   const closeDetailsPopup = () => {
     setSelectedReport(null);
   };
+
+
+  const handleDelete = async (id) => {
+    axios.delete(`${process.env.REACT_APP_BASE_URL}/api/delete-report/` + id)
+    .then(res => {
+      console.log(res);
+      window.location.reload();
+    })
+    .catch(err => console.log(err));
+  }
+  
+  
+  
+  
+  
 
   return (
     <div className="container-fluid p-3 report-container">
@@ -44,7 +62,7 @@ const ReportPage = () => {
           <h1>Report</h1>
         </div>
         <TableContainer component={Paper}>
-          <Table>
+          <Table className=''>
             <TableHead>
               <TableRow>
                 <StyledTableCell>#</StyledTableCell>
@@ -52,13 +70,14 @@ const ReportPage = () => {
                 <StyledTableCell>Service</StyledTableCell>
                 <StyledTableCell>Section</StyledTableCell>
                 <StyledTableCell>Supervisor</StyledTableCell>
-                <StyledTableCell>Personnel Count</StyledTableCell>
+                {/* <StyledTableCell>Personnel Count</StyledTableCell>
                 <StyledTableCell>Volunteer's Count</StyledTableCell>
                 <StyledTableCell>Challenges</StyledTableCell>
                 <StyledTableCell>Solution</StyledTableCell>
                 <StyledTableCell>Faulty Equipment</StyledTableCell>
-                <StyledTableCell>Remark</StyledTableCell>
+                <StyledTableCell>Remark</StyledTableCell> */}
                 <StyledTableCell>Location</StyledTableCell>
+                <StyledTableCell colspan="2" className="text-center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -73,13 +92,15 @@ const ReportPage = () => {
                   <TableCell>{report.serviceType}</TableCell>
                   <TableCell>{report.section}</TableCell>
                   <TableCell>{report.supervisor}</TableCell>
-                  <TableCell>{report.personnelCount}</TableCell>
+                  {/* <TableCell>{report.personnelCount}</TableCell>
                   <TableCell>{report.volunteersCount}</TableCell>
                   <TableCell>{report.challenges}</TableCell>
                   <TableCell>{report.solution}</TableCell>
                   <TableCell>{report.equipmentDetails}</TableCell>
-                  <TableCell>{report.remarks}</TableCell>
+                  <TableCell>{report.remarks}</TableCell> */}
                   <TableCell>{report.location}</TableCell>
+                  <TableCell className='bg-light' ><Link to={`/edit/${report._id}`} className="btn btn-primary">Edit</Link></TableCell>
+                  <TableCell className='bg-light'><div className="btn btn-danger" onClick={() => handleDelete(report._id)} >Delete</div></TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -122,14 +143,11 @@ const ReportPage = () => {
               <Card>
                 <CardContent>
                   <h2>Report Details</h2>
-                  <Typography variant="h5" component="div" mb={2}>
+                  <Typography variant="h6" component="div" mb={2}>
                     {selectedReport?.serviceType}
                   </Typography>
                   <Typography color="textSecondary" gutterBottom>
                     Date: {selectedReport?.date}
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    Service: {selectedReport?.serviceType}
                   </Typography>
                   {/* <Typography color="textSecondary" gutterBottom>
                     Service Type: {selectedReport?.subService}
@@ -161,12 +179,9 @@ const ReportPage = () => {
                   <Typography color="textSecondary" gutterBottom>
                     Location: {selectedReport?.location}
                   </Typography>
+                  
                 </CardContent>
               </Card>
-              <div className="container mt-3 d-flex align-items-center justify-content-between">
-                  <div className="btn btn-primary">Edit</div>
-                  <div className="btn btn-danger">Delete</div>
-              </div>
             </Box>
           </Fade>
         </Modal>

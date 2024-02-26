@@ -3,6 +3,7 @@ import Image from "../assets/logoo.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+// require('dotenv').config()
 
 const ReportForm = () => {
   const [formData, setFormData] = useState({
@@ -103,7 +104,7 @@ const ReportForm = () => {
 
     try {
       const response = await axios.post(
-        "https://q61zr44g-5001.uks1.devtunnels.ms/api/submit-report",
+        `${process.env.REACT_APP_BASE_URL}/api/submit-report`,
         formData
       );
 
@@ -138,7 +139,7 @@ const ReportForm = () => {
 
   return (
     <div className="bg">
-      <div className="container p-5 d-flex align-items-center justify-content-center flex-column">
+      <div className="container p-5 d-flex align-items-center justify-content-center flex-column" id="report_form">
         <div className="banner">
           <img src={Image} alt="" />
         </div>
