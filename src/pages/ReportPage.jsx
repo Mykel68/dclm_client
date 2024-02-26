@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box} from '@mui/material';
-import Image from '../assets/logoo.jpg';
+import Image from '../assets/dlbc.png';
 import ReportDetailsModal from '../components/ReportDetailsModal'; 
-// require('dotenv').config()
+
 
 
 const ReportPage = () => {
@@ -62,11 +62,13 @@ const ReportPage = () => {
   return (
     <div className="container-fluid p-3 report-container">
       <div className="">
+        <div className="container">
         <div className="head-container">
           <div className="logo">
-            <img src={Image} alt="" />
+            <img src={Image} alt="" className='img' style={{ width: '50px', height: '50px' }} />
           </div>
-          <h1>Report</h1>
+          <h1 className='me-5' >Report</h1>
+        </div>
         </div>
         <TableContainer component={Paper}>
           <Table className=''>
@@ -84,7 +86,7 @@ const ReportPage = () => {
                 <StyledTableCell>Faulty Equipment</StyledTableCell>
                 <StyledTableCell>Remark</StyledTableCell> */}
                 <StyledTableCell>Location</StyledTableCell>
-                <StyledTableCell colspan="2" className="text-center">Action</StyledTableCell>
+                <StyledTableCell className="text-center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -107,7 +109,6 @@ const ReportPage = () => {
                   <TableCell>{report.remarks}</TableCell> */}
                   <TableCell>{report.location}</TableCell>
                   <TableCell className='bg-light' ><Link to={`/edit/${report._id}`} className="btn btn-primary">Edit</Link></TableCell>
-                  <TableCell className='bg-light'><div className="btn btn-danger" onClick={() => handleDelete(report._id)} >Delete</div></TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -156,12 +157,12 @@ const ReportPage = () => {
                   <Typography color="textSecondary" gutterBottom>
                     Date: {selectedReport?.date}
                   </Typography>
-                  {/* <Typography color="textSecondary" gutterBottom>
+                  <Typography color="textSecondary" gutterBottom>
                     Service Type: {selectedReport?.subService}
                   </Typography>
                   <Typography color="textSecondary" gutterBottom>
                     Service Day: {selectedReport?.subServiceDay}
-                  </Typography> */}
+                  </Typography>
                   <Typography color="textSecondary" gutterBottom>
                     Section: {selectedReport?.section}
                   </Typography>
@@ -189,6 +190,9 @@ const ReportPage = () => {
                   
                 </CardContent>
               </Card>
+              <div className="d-flex justify-content-center align-items-center">
+                  <div className="btn btn-danger mt-2" onClick={() => handleDelete(selectedReport._id)} >Delete</div>
+                </div>
             </Box>
           </Fade>
         </Modal>

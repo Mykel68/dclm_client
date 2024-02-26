@@ -89,6 +89,7 @@ const ReportForm = () => {
     // Check if all required fields are filled
     const requiredFields = [
       "date",
+      "seviceType",
       "section",
       "supervisor",
       "personnelCount",
