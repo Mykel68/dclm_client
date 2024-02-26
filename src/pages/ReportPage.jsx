@@ -15,8 +15,14 @@ const ReportPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/fetch-reports`);
+  
         if (response.status === 200) {
-          setReports(response.data.reverse());
+          // Check if response.data is an array before attempting to reverse
+          if (Array.isArray(response.data)) {
+            setReports(response.data.reverse());
+          } else {
+            console.error('Error: Response data is not an array');
+          }
         } else {
           console.error('Error fetching reports');
         }
@@ -27,6 +33,7 @@ const ReportPage = () => {
   
     fetchData();
   }, []);
+  
   
 
   const openDetailsPopup = (report) => {
