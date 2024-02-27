@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 
 const EditReportPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [report, setReport] = useState({
-    date: '',
-    serviceType: '',
-    section: '',
-    supervisor: '',
-    location: '',
+    date: "",
+    serviceType: "",
+    section: "",
+    supervisor: "",
+    location: "",
   });
-
 
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/edit-report/`+ id);
-        // console.log(response.data)
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/edit-report/` + id
+        );
         if (response.status === 200) {
           setReport(response.data);
         } else {
-          console.error('Error fetching report');
+          console.error("Error fetching report");
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -49,41 +49,32 @@ const EditReportPage = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/update-report/${id}`, report);
-      if (response.status === 200) {
-        console.log('Report updated successfully');
-        // Optionally, redirect the user or perform other actions after successful update
-        navigate('/report'); // Navigate to the report page after successful update
-      } else {
-        console.error('Error updating report');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/api/update-report/${id}`, report)
+      .then((res) => {
+        console.log(res);
+        navigate("/report");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box className="pb-5 bg-primary-subtle p-2 min-vh-100 d-flex align-items-center justify-content-center">
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
         <Typography component="h1" variant="h5" gutterBottom>
           Edit Report
         </Typography>
-        <form onSubmit={handleFormSubmit} style={{ width: '100%' }}>
-          <Box sx={{ display: 'grid', gap: 2 }}>
-            {/* <TextField
-              label="Date"
-              variant="outlined"
-              name="date"
-              value={''}
-              defaultValue={`${report.date}`}
-              onChange={handleInputChange}
-              fullWidth
-              margin="normal"
-              required
-              type='date'
-              placeholder={`Previous: ${report.date}`}
-            /> */}
+        <form onSubmit={handleFormSubmit} style={{ width: "100%" }}>
+          <Box sx={{ display: "grid", gap: 2 }}>
             <TextField
               label="Service Type"
               variant="outlined"
@@ -94,6 +85,7 @@ const EditReportPage = () => {
               margin="normal"
               required
               placeholder={`Previous: ${report.serviceType}`}
+              // onChange={(e) => setServiceType(e.target.value)}
             />
             <TextField
               label="Section"
@@ -134,7 +126,7 @@ const EditReportPage = () => {
           </Box>
         </form>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 

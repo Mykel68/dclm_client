@@ -76,7 +76,7 @@ const ReportForm = () => {
       ...prev,
       subService: e.target.value,
       subServiceDay: null,
-    })); // Use e.currentTarget.value
+    }));
   };
 
   const handleSubOptionChange = (e) => {
@@ -89,13 +89,14 @@ const ReportForm = () => {
     // Check if all required fields are filled
     const requiredFields = [
       "date",
-      "seviceType",
+      "serviceType", // <-- Corrected property name here
       "section",
       "supervisor",
       "personnelCount",
       "volunteersCount",
       "location",
     ];
+
     const isAnyFieldEmpty = requiredFields.some((field) => !formData[field]);
 
     if (isAnyFieldEmpty) {
