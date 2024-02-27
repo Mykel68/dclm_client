@@ -1,98 +1,95 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Image from '../assets/dlbc.png';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Image from "../assets/dlbc.png";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ name: '', password: '' });
-  const [loginError, setLoginError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login`, formData);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-      if (response.data.token) {
-        // Save token to localStorage or cookies for future requests
-        localStorage.setItem('token', response.data.token);
-        // Use navigate to redirect to the '/report' route
-        navigate('/report');
-      } else {
-        // Handle login failure (show error message, etc.)
-        setLoginError('Login failed. Please check your credentials.');
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/auth/login`,
+        formData
+      );
+
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard"); // Redirect to the dashboard or any other page after successful login
     } catch (error) {
-      console.error('Error:', error);
-      setLoginError('An error occurred during login. Please try again later.');
+      if (error.response && error.response.status === 401) {
+        // Unauthorized access, handle accordingly
+        console.error("Unauthorized access. Please check your credentials.");
+      } else {
+        // Other errors, log the details
+        console.error("Error:", error);
+      }
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs" className='bg-light '>
-      <Box 
+    <Container component="main" maxWidth="xs" className="bg-light">
+      <Box
         borderRadius={"10px"}
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '30px',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "30px",
         }}
       >
-        <img src={Image} alt="" style={{ width: '40px' }} />
+        <img src={Image} alt="" style={{ width: "40px" }} />
         <Typography component="h1" variant="h5">
           DCLM Admin
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          sx={{ mt: 1 }}
-        >
+        <form onSubmit={handleSubmit}>
           <TextField
-            margin="normal"
-            required
             fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            margin="normal"
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
           />
           <TextField
-            margin="normal"
-            required
             fullWidth
-            name="password"
+            margin="normal"
             label="Password"
             type="password"
-            id="password"
-            autoComplete="current-password"
+            name="password"
             value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            onChange={handleChange}
           />
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             color="success"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleLogin}
           >
             Login
           </Button>
-          {loginError && (
-            <Typography color="error" variant="body2" sx={{ mt: 2 }}>
-              {loginError}
-            </Typography>
-          )}
-        </Box>
+        </form>
       </Box>
     </Container>
   );

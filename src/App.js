@@ -9,6 +9,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // import Edit from './pages/Edit';
 import Login from './pages/Login';
 import EditReportPage from './pages/EditReportPage';
+import Register from './pages/Register'
 
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/edit/:reportId" element={<EditReportPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
   </BrowserRouter>
   );

@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box} from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Card, CardContent, Typography, Box } from '@mui/material';
 import Image from '../assets/dlbc.png';
-import ReportDetailsModal from '../components/ReportDetailsModal'; 
-
-
+import ReportDetailsModal from '../components/ReportDetailsModal';
 
 const ReportPage = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
 
   useEffect(() => {
+    // Check if 'window' is defined before using localStorage
+    if (typeof window !== 'undefined') {
+      // Code using localStorage
+      localStorage.setItem('isLoggedIn', 'true');
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/fetch-reports`);
-  
+
         if (response.status === 200) {
           // Check if response.data is an array before attempting to reverse
           if (Array.isArray(response.data)) {
@@ -30,7 +34,7 @@ const ReportPage = () => {
         console.error('Error:', error);
       }
     };
-  
+
     fetchData();
   }, []);
   
@@ -53,12 +57,8 @@ const ReportPage = () => {
     })
     .catch(err => console.log(err));
   }
+    
   
-  
-  
-  
-  
-
   return (
     <div className="container-fluid p-3 report-container">
       <div className="">

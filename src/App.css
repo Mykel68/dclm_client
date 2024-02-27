@@ -44,8 +44,9 @@ body{
   border-radius: 10px;
 }
 .banner img{
-  width: 100%;
-  
+  width: calc(100vw - 420px);
+  height: 200px;  
+  aspect-ratio: 1/ 2;
 }
 
 .title-container {
