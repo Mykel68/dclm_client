@@ -67,7 +67,7 @@ const ReportForm = () => {
       ...prev,
       serviceType: e.target.value,
       subService: null,
-      subServiceDay: null
+      subServiceDay: null,
     }));
   };
 
@@ -140,7 +140,10 @@ const ReportForm = () => {
 
   return (
     <div className="bg">
-      <div className="container p-5 d-flex align-items-center justify-content-center flex-column" id="report_form">
+      <div
+        className="container p-5 d-flex align-items-center justify-content-center flex-column"
+        id="report_form"
+      >
         <div className="banner">
           <img src={Image} alt="" />
         </div>
@@ -191,7 +194,10 @@ const ReportForm = () => {
                     {e.subService && formData.serviceType === e.service
                       ? e.subService.map((e) => {
                           return (
-                            <div className="form-check" style={{ marginLeft: '15px' }}>
+                            <div
+                              className="form-check"
+                              style={{ marginLeft: "15px" }}
+                            >
                               <input
                                 className="form-check-input"
                                 type="radio"
@@ -221,9 +227,7 @@ const ReportForm = () => {
                                           id="option1"
                                           value={e}
                                           onChange={handleSubOptionChange}
-                                          checked={
-                                            formData.subServiceDay === e
-                                          }
+                                          checked={formData.subServiceDay === e}
                                         />
                                         <label
                                           className="form-check-label"
