@@ -37,7 +37,7 @@ const ReportPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/fetch-reports`
+          `${process.env.REACT_APP_BACKEND_URL}/api/fetch-reports`
         );
 
         if (response.status === 200) {
@@ -68,7 +68,7 @@ const ReportPage = () => {
 
   const handleDelete = async (id) => {
     axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/api/delete-report/` + id)
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/api/delete-report/` + id)
       .then((res) => {
         console.log(res);
         window.location.reload();

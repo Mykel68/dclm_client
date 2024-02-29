@@ -33,7 +33,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/auth/register`,
+        `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
         formData
       );
 

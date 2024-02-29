@@ -50,7 +50,10 @@ const EditReportPage = () => {
     e.preventDefault();
 
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/api/update-report/${id}`, report)
+      .put(
+        `${process.env.REACT_APP_BACKEND_URL}/api/update-report/${id}`,
+        report
+      )
       .then((res) => {
         console.log(res);
         navigate("/report");
