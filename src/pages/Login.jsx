@@ -30,7 +30,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        `${REACT_APP_BACKEND_URL}/auth/login`,
+        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
         formData
       );
 
