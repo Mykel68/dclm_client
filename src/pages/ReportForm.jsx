@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import Image from "../assets/logoo.jpg";
+import Image from "../assets/dlbc.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-// require('dotenv').config()
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const ReportForm = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ const ReportForm = () => {
     supervisor: null,
     personnelCount: null,
     volunteersCount: null,
-    challenges: null,
+    challenges: [],
     solution: null,
     equipmentDetails: null,
     remarks: null,
@@ -79,6 +81,30 @@ const ReportForm = () => {
     }));
   };
 
+  const handleAdd = (e) => {
+    e.preventDefault();
+    setFormData((prev) => ({
+      ...prev,
+      challenges: [...prev.challenges, ""],
+    }));
+  };
+
+  const handleChallengeInputChange = (index, value) => {
+    setFormData((prev) => {
+      const updatedChallenges = [...prev.challenges];
+      updatedChallenges[index] = value;
+      return { ...prev, challenges: updatedChallenges };
+    });
+  };
+
+  const handleRemoveChallenge = (index) => {
+    setFormData((prev) => {
+      const updatedChallenges = [...prev.challenges];
+      updatedChallenges.splice(index, 1);
+      return { ...prev, challenges: updatedChallenges };
+    });
+  };
+
   const handleSubOptionChange = (e) => {
     setFormData(() => ({ ...formData, subServiceDay: e.target.value }));
   };
@@ -89,7 +115,7 @@ const ReportForm = () => {
     // Check if all required fields are filled
     const requiredFields = [
       "date",
-      "serviceType", // <-- Corrected property name here
+      "serviceType",
       "section",
       "supervisor",
       "personnelCount",
@@ -113,7 +139,7 @@ const ReportForm = () => {
       if (response.status === 201) {
         toast.success("Report submitted successfully");
         console.log(formData);
-        // Reset form data after submission if needed
+        // Reset form data after submission as null
         setFormData({
           date: null,
           serviceType: null,
@@ -313,17 +339,41 @@ const ReportForm = () => {
 
             <div className="form-group mb-3">
               <label htmlFor="challenges">Challenges Encountered: </label>
-              <p>Explain in details</p>
-              <textarea
-                className="form-control"
-                name="challenges"
-                id="challenges"
-                rows="4" // You can adjust the number of rows as needed
-                style={{ resize: "none" }}
-                placeholder=""
-                value={formData.challenges}
-                onChange={handleInputChange}
-              />
+              {formData.challenges.map((challenge, index) => (
+                <div key={index} className="d-flex mb-2">
+                  <input
+                    className="form-control me-2"
+                    name={`challenges-${index}`}
+                    id={`challenges-${index}`}
+                    type="text"
+                    style={{ resize: "none" }}
+                    placeholder={`Challenge ${index + 1}`}
+                    value={challenge}
+                    onChange={(e) =>
+                      handleChallengeInputChange(index, e.target.value)
+                    }
+                  />
+                  <IconButton
+                    aria-label="RemoveIcon"
+                    size="small"
+                    className="bg-danger text-white"
+                    onClick={() => handleRemoveChallenge(index)}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                </div>
+              ))}
+              <div className="d-flex justify-content-between mb-1">
+                <p>Add Challenges</p>
+                <IconButton
+                  aria-label="AddIcon"
+                  size="small"
+                  className="bg-success text-white"
+                  onClick={handleAdd}
+                >
+                  <AddIcon />
+                </IconButton>
+              </div>
             </div>
 
             <div className="form-group mb-3">

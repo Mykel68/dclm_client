@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -17,6 +17,7 @@ import {
   CardContent,
   Typography,
   Box,
+  Stack,
 } from "@mui/material";
 import Image from "../assets/dlbc.png";
 import ReportDetailsModal from "../components/ReportDetailsModal";
@@ -24,6 +25,7 @@ import ReportDetailsModal from "../components/ReportDetailsModal";
 const ReportPage = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if 'window' is defined before using localStorage
@@ -74,6 +76,11 @@ const ReportPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
+
   return (
     <div className="container-fluid p-3 report-container">
       <div className="">
@@ -88,6 +95,16 @@ const ReportPage = () => {
               />
             </div>
             <h1 className="me-5">Report</h1>
+
+            <Stack className="aliign-items-end justify-content-end w-100">
+              <button
+                variant="contained"
+                className="btn btn-danger d-flex align-self-end "
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </Stack>
           </div>
         </div>
         <TableContainer component={Paper}>
