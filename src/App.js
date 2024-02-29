@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState } from "react";
 import ReportForm from "./pages/ReportForm";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AdminPage from "./pages/AdminPage";
@@ -10,23 +11,27 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Login from "./pages/Login";
 import EditReportPage from "./pages/EditReportPage";
 import Register from "./pages/Register";
-
-function ProtectedRoute({ children }) {
-  if (!localStorage.getItem("token")) {
-    return <Navigate to="/" replace />;
-  }
-  return children;
-}
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ReportForm />} />
-        <Route path="/report" element={<ReportPage />} />
+        <Route
+          path="/report"
+          element={
+            <PrivateRoute component={<ReportPage />} isLoggedIn={isLoggedIn} />
+          }
+        />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/edit/:id" element={<EditReportPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>

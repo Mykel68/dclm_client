@@ -263,8 +263,19 @@ const ReportPage = () => {
                     variant="div"
                     gutterBottom
                   >
-                    Challenges: {selectedReport?.challenges}
+                    Challenges:
                   </Typography>
+                  {selectedReport?.challenges.map((challenge, index) => (
+                    <Typography
+                      color="textSecondary"
+                      component="div"
+                      variant="body1"
+                      key={index}
+                      gutterBottom
+                    >
+                      {index + 1}. {challenge}
+                    </Typography>
+                  ))}
                   <Typography
                     color="textSecondary"
                     component="h6"
