@@ -23,7 +23,7 @@ const EditReportPage = () => {
     const fetchReport = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/edit-report/` + id
+          `${process.env.REACT_APP_BACKEND_URL}/api/edit-report/` + id
         );
         if (response.status === 200) {
           setReport(response.data);

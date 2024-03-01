@@ -11,6 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  axios.defaults.withCredentials = true;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,7 +32,8 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-        formData
+        formData,
+        { withCredentials: true }
       );
 
       localStorage.setItem("token", response.data.token);
