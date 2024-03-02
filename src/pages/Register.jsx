@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import EmailIcon from "@mui/icons-material/Email";
 import Image from "../assets/dlbc.png";
@@ -32,9 +31,10 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
-        formData
+        formData,
+        { withCredentials: false }
       );
 
       // Display success message

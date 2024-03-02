@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -30,13 +29,13 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
         formData,
-        { withCredentials: true }
+        { withCredentials: false }
       );
 
-      localStorage.setItem("token", response.data.token);
+      // localStorage.setItem("token", response.data.token);
       navigate("/report");
     } catch (error) {
       if (error.response && error.response.status === 401) {
