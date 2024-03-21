@@ -24,18 +24,23 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
         formData,
         { withCredentials: false }
       );
 
-      // localStorage.setItem("token", response.data.token);
+      // Extract the token from the response data
+      const token = response.data.token;
+
+      // Store the token in localStorage
+      localStorage.setItem("token", token);
+
+      // Redirect to the "/report" page
       navigate("/report");
     } catch (error) {
       if (error.response && error.response.status === 401) {

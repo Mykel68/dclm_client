@@ -113,9 +113,9 @@ const Register = () => {
         >
           Register
         </Button>
-        <Typography className="mt-3">
+        {/* <Typography className="mt-3">
           Already an Admin? <Link to="/login">Login</Link>
-        </Typography>
+        </Typography> */}
       </form>
 
       {/* Toast container to display messages */}
