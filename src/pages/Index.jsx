@@ -6,10 +6,10 @@ import axios from "axios";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import BannerText from "../../../../components/Banner-text";
-import BannerImage from "../../../../components/Banner-image";
+import BannerText from "../components/Banner-text";
+import BannerImage from "../components/Banner-image";
 
-const ReportForm = () => {
+const Index = () => {
   const [formData, setFormData] = useState({
     date: null,
     serviceType: null,
@@ -440,4 +440,4 @@ const ReportForm = () => {
   );
 };
 
-export default ReportForm;
+export default Index;

@@ -40,8 +40,7 @@ const Login = () => {
       // Store the token in localStorage
       localStorage.setItem("token", token);
 
-      // Redirect to the "/report" page
-      navigate("/report");
+      navigate("/super_admin");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized access, handle accordingly

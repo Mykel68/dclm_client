@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -17,16 +17,14 @@ import {
   CardContent,
   Typography,
   Box,
-  Stack,
 } from "@mui/material";
-import Image from "../../../../assets/dlbc.png";
+
 import Bar from "../../../../components/Bar";
 import ReportDetailsModal from "../../../../components/ReportDetailsModal";
 
 const ReportPage = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if 'window' is defined before using localStorage
@@ -75,11 +73,6 @@ const ReportPage = () => {
         window.location.reload();
       })
       .catch((err) => console.log(err));
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    navigate("/login");
   };
 
   return (

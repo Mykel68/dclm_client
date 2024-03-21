@@ -104,7 +104,9 @@ const Register = () => {
             value={formData.password}
           />
         </Box>
-        {/* </Box> */}
+
+        <Box></Box>
+
         <Button
           type="submit"
           variant="contained"
@@ -113,9 +115,6 @@ const Register = () => {
         >
           Register
         </Button>
-        {/* <Typography className="mt-3">
-          Already an Admin? <Link to="/login">Login</Link>
-        </Typography> */}
       </form>
 
       {/* Toast container to display messages */}
