@@ -11,6 +11,12 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Stack } from "@mui/material";
+import WorkspacesIcon from "@mui/icons-material/Workspaces";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,6 +24,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    section: "",
   });
 
   const handleChange = (e) => {
@@ -29,12 +36,12 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
 
     try {
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
-        formData,
-        { withCredentials: false }
+        formData
       );
 
       // Display success message
@@ -92,7 +99,7 @@ const Register = () => {
             value={formData.email}
           />
         </Box>
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+        <Box sx={{ display: "flex", alignItems: "flex-end", mb: 1 }}>
           <KeyIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
           <TextField
             id="password"
@@ -105,7 +112,29 @@ const Register = () => {
           />
         </Box>
 
-        <Box></Box>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth variant="standard">
+            <InputLabel id="demo-simple-select-label">Section</InputLabel>
+
+            <Select
+              labelId="demo-simple-select-label"
+              id="section"
+              name="section"
+              value={formData.section}
+              label="Section"
+              onChange={handleChange}
+            >
+              <MenuItem value="Zoom and Playback">Zoom and Playback</MenuItem>
+              <MenuItem value="Teleprompting">Teleprompting</MenuItem>
+              <MenuItem value="Video">Video</MenuItem>
+              <MenuItem value="Audio">Audio</MenuItem>
+              <MenuItem value="Streaming">Streaming</MenuItem>
+              <MenuItem value="Uplink">Uplink</MenuItem>
+              <MenuItem value="Graphics">Graphics</MenuItem>
+              <MenuItem value="Super_admin">Super_admin</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
         <Button
           type="submit"

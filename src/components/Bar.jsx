@@ -31,7 +31,7 @@ export default function Bar() {
     setOpen(newOpen);
   };
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
     navigate("/login");
   };
   const navigate = useNavigate();
@@ -129,10 +129,7 @@ export default function Bar() {
           </Typography>
           <Stack direction="row" spacing={2} style={{ marginLeft: "auto" }}>
             <Button variant="contained" color="error" onClick={handleLogout}>
-              <Link
-                to="/logout"
-                style={{ textDecoration: "none", color: "white" }}
-              >
+              <Link style={{ textDecoration: "none", color: "white" }}>
                 Logout
               </Link>
             </Button>

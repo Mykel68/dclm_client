@@ -33,6 +33,7 @@ const Login = () => {
         formData,
         { withCredentials: false }
       );
+      localStorage.setItem("token", response.data.token);
 
       // Extract the token from the response data
       const token = response.data.token;
