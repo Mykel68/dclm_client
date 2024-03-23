@@ -22,10 +22,11 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import Image from "../assets/dlbc.png";
 import { Button, Stack } from "@mui/material";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
+import { jwtDecode } from "jwt-decode";
 
 export default function Bar() {
   const [open, setOpen] = React.useState(false);
-  const [userType, setUserType] = React.useState("Super Admin");
+  const [userType, setUserType] = React.useState("Super");
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -35,6 +36,14 @@ export default function Bar() {
     navigate("/login");
   };
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserType(decodedToken.userType);
+    }
+  }, []);
 
   const DrawerList = (
     <Box
@@ -83,26 +92,32 @@ export default function Bar() {
         ))}
       </List>
       <Divider />
-      <List>
-        {[
-          { text: "All Admin", icon: <AccountBoxIcon />, link: "/all_admin" },
-          { text: "Add Admin", icon: <PersonAddAltIcon />, link: "/new_admin" },
-          { text: "Delete Admin", icon: <PersonOffIcon />, link: "/edit" },
-        ].map((item, index) => (
-          <ListItem
-            key={index}
-            disablePadding
-            button
-            component={Link}
-            to={item.link}
-          >
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      {userType === "Super admin" ? (
+        <List>
+          {[
+            { text: "All Admin", icon: <AccountBoxIcon />, link: "/all_admin" },
+            {
+              text: "Add Admin",
+              icon: <PersonAddAltIcon />,
+              link: "/new_admin",
+            },
+            { text: "Delete Admin", icon: <PersonOffIcon />, link: "/edit" },
+          ].map((item, index) => (
+            <ListItem
+              key={index}
+              disablePadding
+              button
+              component={Link}
+              to={item.link}
+            >
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      ) : null}
     </Box>
   );
 

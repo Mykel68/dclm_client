@@ -29,8 +29,6 @@ const ReportPage = () => {
   useEffect(() => {
     // Check if 'window' is defined before using localStorage
     if (typeof window !== "undefined") {
-      // Code using localStorage
-      localStorage.setItem("isLoggedIn", "true");
     }
 
     const fetchData = async () => {

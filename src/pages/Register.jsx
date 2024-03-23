@@ -131,7 +131,7 @@ const Register = () => {
               <MenuItem value="Streaming">Streaming</MenuItem>
               <MenuItem value="Uplink">Uplink</MenuItem>
               <MenuItem value="Graphics">Graphics</MenuItem>
-              <MenuItem value="Super_admin">Super_admin</MenuItem>
+              <MenuItem value="Super admin">Super admin</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -146,7 +146,6 @@ const Register = () => {
         </Button>
       </form>
 
-      {/* Toast container to display messages */}
       <ToastContainer position="top-right" autoClose={5000} />
     </Box>
   );

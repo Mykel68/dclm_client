@@ -41,9 +41,9 @@ const Login = () => {
       const decodedToken = jwtDecode(response.data.token);
 
       console.log(decodedToken);
-      if (decodedToken.userType === "admin") {
+      if (decodedToken.userType === "Admin") {
         navigate("/admin");
-      } else if (decodedToken.userType === "super_admin") {
+      } else if (decodedToken.userType === "Super admin") {
         navigate("/super_admin");
       }
     } catch (error) {
