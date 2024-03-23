@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Image from "../assets/dlbc.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   axios.defaults.withCredentials = true;
@@ -33,15 +34,18 @@ const Login = () => {
         formData,
         { withCredentials: false }
       );
+      const token = response.data.token;
       localStorage.setItem("token", response.data.token);
 
-      // Extract the token from the response data
-      const token = response.data.token;
+      // Redirect based on user role
+      const decodedToken = jwtDecode(response.data.token);
 
-      // Store the token in localStorage
-      localStorage.setItem("token", token);
-
-      navigate("/super_admin");
+      console.log(decodedToken);
+      if (decodedToken.userType === "admin") {
+        navigate("/admin");
+      } else if (decodedToken.userType === "super_admin") {
+        navigate("/super_admin");
+      }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized access, handle accordingly
