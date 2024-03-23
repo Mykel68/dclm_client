@@ -1,50 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { Link, useAsyncError } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
-import { Box, Paper, Typography, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import Bar from "../../../components/Bar";
-import Container from "@mui/material/Container";
 import Card from "../../../components/Card";
+import { jwtDecode } from "jwt-decode";
 
 const Index = () => {
   const [adminCount, setAdminCount] = useState(0);
   const [reportCount, setReportCount] = useState(0);
+  const [userType, setUserType] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAdminCount();
+    fetchReportCount();
   }, []);
 
   const fetchAdminCount = async () => {
     try {
-      const response = await fetch("/api/getAdminCount");
-      const data = await response.json();
-
-      console.log(data);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/getAdminCount`
+      );
+      const data = response.data;
 
       setAdminCount(data.adminCount);
-      setReportCount(data.reportCount);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching admin count:", error);
     }
   };
-  useEffect(() => {
-    fetchReportCount();
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserType(decodedToken.userType);
+    } else {
+      navigate("/login");
+    }
   }, []);
 
   const fetchReportCount = async () => {
     try {
-      const response = await fetch("/api/getReportCount");
-      const data = await response.json();
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/getReportCount`
+      );
+      const data = response.data;
 
-      console.log(data);
-
-      setAdminCount(data.adminCount);
       setReportCount(data.reportCount);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching report count:", error);
     }
   };
+
   return (
     <div>
       <Bar />
@@ -60,11 +70,15 @@ const Index = () => {
             item={"Admin"}
             quantity={adminCount}
           />
-          <Card
-            icon={<TextSnippetIcon color="primary" style={{ fontSize: 150 }} />}
-            item={"Report"}
-            quantity={reportCount}
-          />
+          {userType === "Super admin" ? (
+            <Card
+              icon={
+                <TextSnippetIcon color="primary" style={{ fontSize: 150 }} />
+              }
+              item={"Report"}
+              quantity={reportCount}
+            />
+          ) : null}
         </Stack>
       </Container>
     </div>

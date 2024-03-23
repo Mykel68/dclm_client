@@ -26,7 +26,7 @@ import { jwtDecode } from "jwt-decode";
 
 export default function Bar() {
   const [open, setOpen] = React.useState(false);
-  const [userType, setUserType] = React.useState("Super");
+  const [userType, setUserType] = React.useState("");
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -42,6 +42,8 @@ export default function Bar() {
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserType(decodedToken.userType);
+    } else {
+      navigate("/login");
     }
   }, []);
 

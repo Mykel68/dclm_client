@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 
-import { useState } from "react";
 import Typography from "@mui/material/Typography";
 export default function Card({ icon, item, quantity }) {
   return (
