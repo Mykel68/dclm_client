@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import { Box, Container, Stack } from "@mui/material";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import Bar from "../../../components/Bar";
 import Card from "../../../components/Card";
@@ -70,15 +70,13 @@ const Index = () => {
             item={"Admin"}
             quantity={adminCount}
           />
-          {userType === "Super admin" ? (
-            <Card
-              icon={
-                <TextSnippetIcon color="primary" style={{ fontSize: 150 }} />
-              }
-              item={"Report"}
-              quantity={reportCount}
-            />
-          ) : null}
+          {/* {userType === "Super admin" ? ( */}
+          <Card
+            icon={<TextSnippetIcon color="primary" style={{ fontSize: 150 }} />}
+            item={"Report"}
+            quantity={reportCount}
+          />
+          {/* ) : null} */}
         </Stack>
       </Container>
     </div>

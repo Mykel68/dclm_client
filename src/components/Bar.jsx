@@ -23,6 +23,7 @@ import Image from "../assets/dlbc.png";
 import { Button, Stack } from "@mui/material";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import { jwtDecode } from "jwt-decode";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function Bar() {
   const [open, setOpen] = React.useState(false);
@@ -68,6 +69,28 @@ export default function Bar() {
         />
         {userType}
       </Typography>
+      {[
+        {
+          text: "Home",
+          icon: <HomeIcon />,
+          link: userType === "Admin" ? "/admin" : "/super_admin",
+        },
+      ].map((item, index) => (
+        <ListItem
+          key={index}
+          disablePadding
+          button
+          component={Link}
+          to={item.link}
+        >
+          <ListItemButton>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+
+      <Divider />
       <List>
         {[
           { text: "Report Page", icon: <AssessmentIcon />, link: "/report" },

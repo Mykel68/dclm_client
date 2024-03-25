@@ -45,6 +45,8 @@ const Login = () => {
       } else if (decodedToken.userType === "Super admin") {
         navigate("/super_admin");
       }
+
+   
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized access, handle accordingly

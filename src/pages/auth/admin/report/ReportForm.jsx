@@ -1,7 +1,12 @@
 import React from "react";
+import Form from "../../../../pages/Index";
 
 const ReportForm = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Form />
+    </div>
+  );
 };
 
 export default ReportForm;
