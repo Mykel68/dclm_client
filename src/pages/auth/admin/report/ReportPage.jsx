@@ -21,21 +21,20 @@ import {
 
 import Bar from "../../../../components/Bar";
 import ReportDetailsModal from "../../../../components/ReportDetailsModal";
-import useUserToken from "../../../../hooks/useUserToken"; // Import the hook
 
 const ReportPage = () => {
-  const { userSection } = useUserToken(); // Destructure userSection from the hook
   const [reports, setReports] = useState([]);
-  const [selectedReport, setSelectedReport] = useState(null);
+  const [selectedReport, setSelectedReport] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/admin/getReport/${userSection}` // Use userSection here
+          `${process.env.REACT_APP_BACKEND_URL}/admin/getReport/${section}`
         );
 
         if (response.status === 200) {
+          // Check if response.data is an array before attempting to reverse
           if (Array.isArray(response.data)) {
             setReports(response.data.reverse());
           } else {
@@ -50,7 +49,7 @@ const ReportPage = () => {
     };
 
     fetchData();
-  }, [userSection]); // Add userSection as a dependency
+  }, [userSection]);
 
   const openDetailsPopup = (report) => {
     setSelectedReport(report);

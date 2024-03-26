@@ -15,7 +15,7 @@ export default function Card({ icon, item, quantity }) {
         },
       }}
     >
-      <Paper elevation={3}>
+      <Paper elevation={3} sx={{ textAlign: "center", p: 2 }}>
         {icon}
         <Typography variant="h4" gutterBottom>
           {item}: {quantity}

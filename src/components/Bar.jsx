@@ -15,19 +15,20 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+// import EditNoteIcon from "@mui/icons-material/EditNote";
+// import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import Image from "../assets/dlbc.png";
 import { Button, Stack } from "@mui/material";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
-import { jwtDecode } from "jwt-decode";
 import HomeIcon from "@mui/icons-material/Home";
+import useUserToken from "../hooks/useUserToken";
 
 export default function Bar() {
   const [open, setOpen] = React.useState(false);
-  const [userType, setUserType] = React.useState("");
+  const { userType } = useUserToken();
+  const navigate = useNavigate();
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -36,17 +37,6 @@ export default function Bar() {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      setUserType(decodedToken.userType);
-    } else {
-      navigate("/login");
-    }
-  }, []);
 
   const DrawerList = (
     <Box
@@ -94,13 +84,17 @@ export default function Bar() {
       <List>
         {[
           { text: "Report Page", icon: <AssessmentIcon />, link: "/report" },
-          { text: "New Report", icon: <AddBoxIcon />, link: "/new" },
-          { text: "Edit Report", icon: <EditNoteIcon />, link: "/edit" },
           {
-            text: "Delete Report",
-            icon: <DeleteForeverIcon />,
-            link: "/delete",
+            text: "New Report",
+            icon: <AddBoxIcon />,
+            link: userType === "Admin" ? "/new_report" : "/super_report",
           },
+          // { text: "Edit Report", icon: <EditNoteIcon />, link: "/edit" },
+          // {
+          //   text: "Delete Report",
+          //   icon: <DeleteForeverIcon />,
+          //   link: "/delete",
+          // },
         ].map((item, index) => (
           <ListItem
             key={index}
@@ -155,8 +149,9 @@ export default function Bar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer(true)}
           >
-            <MenuIcon onClick={toggleDrawer(true)} />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h5" color="inherit" component="div">
             <img
@@ -169,14 +164,17 @@ export default function Bar() {
           </Typography>
           <Stack direction="row" spacing={2} style={{ marginLeft: "auto" }}>
             <Button variant="contained" color="error" onClick={handleLogout}>
-              <Link style={{ textDecoration: "none", color: "white" }}>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "white" }}
+              >
                 Logout
               </Link>
             </Button>
           </Stack>
         </Toolbar>
       </AppBar>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
+      <Drawer open={open} onClose={toggleDrawer(false)} sx={{ width: 250 }}>
         {DrawerList}
       </Drawer>
     </Box>

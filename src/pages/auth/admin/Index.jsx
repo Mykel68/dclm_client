@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Bar from "../../../components/Bar";
-import Body from "../../../components/Body";
 import { Stack } from "@mui/material";
 import Card from "../../../components/Card";
-// import Home from "../super_admin/Index";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import useUserToken from "../../../hooks/useUserToken";
 
 const Index = () => {
-  const [adminCount, setAdminCount] = useState(0);
+  const { userSection } = useUserToken();
   const [reportCount, setReportCount] = useState(0);
 
   useEffect(() => {
-    fetchReportCount();
-  }, []);
+    if (userSection) {
+      fetchReportCount(userSection);
+    }
+  }, [userSection]);
 
-  const fetchReportCount = async () => {
+  const fetchReportCount = async (section) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/getReportCount`
+        `${process.env.REACT_APP_BACKEND_URL}/admin/getReportCount/${section}`
       );
       const data = response.data;
 
@@ -28,31 +28,30 @@ const Index = () => {
       console.error("Error fetching report count:", error);
     }
   };
+
   return (
     <div>
       <Bar />
-
-      <Body>
-        {/* <Stack direction="row" spacing={2}> */}
-        <Card
-          icon={
-            <SupervisedUserCircleIcon
-              color="primary"
-              style={{ fontSize: 150 }}
-            />
-          }
-          item={"Admin"}
-          quantity={adminCount}
-        />
-        {/* {userType === "Super admin" ? ( */}
-        <Card
-          icon={<TextSnippetIcon color="primary" style={{ fontSize: 150 }} />}
-          item={"Report"}
-          quantity={reportCount}
-        />
-        {/* ) : null} */}
-        {/* </Stack> */}
-      </Body>
+      <div
+        component="section"
+        display="flex"
+        gap={4}
+        p={2}
+        style={{
+          width: "100%",
+          height: "90vh",
+          backgroundColor: "#f5f5f5",
+          padding: "100px",
+        }}
+      >
+        <Stack direction="row" spacing={2}>
+          <Card
+            icon={<TextSnippetIcon color="primary" style={{ fontSize: 150 }} />}
+            item={"Report"}
+            quantity={reportCount}
+          />
+        </Stack>
+      </div>
     </div>
   );
 };

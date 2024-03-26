@@ -70,13 +70,22 @@ const Index = () => {
             item={"Admin"}
             quantity={adminCount}
           />
-          {/* {userType === "Super admin" ? ( */}
+
           <Card
             icon={<TextSnippetIcon color="primary" style={{ fontSize: 150 }} />}
             item={"Report"}
             quantity={reportCount}
           />
-          {/* ) : null} */}
+
+          {/* {userType === "Super admin" ? (
+            <Card
+              icon={
+                <TextSnippetIcon color="primary" style={{ fontSize: 150 }} />
+              }
+              item={"Report"}
+              quantity={reportCount}
+            />
+          ) : null} */}
         </Stack>
       </Container>
     </div>
