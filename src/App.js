@@ -17,7 +17,7 @@ import AddAdmin from "./pages/auth/super_admin/admin/AddAdmin";
 import AllAdmin from "./pages/auth/super_admin/admin/AllAdmin";
 import Index from "./pages/Index";
 import NoPage from "./pages/Nopage";
-
+import Profile from "./pages/auth/profile/Profile";
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +34,7 @@ function App() {
         <Route path="/new_admin" element={<AddAdmin />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/super_admin" element={<SuperAdminPage />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
