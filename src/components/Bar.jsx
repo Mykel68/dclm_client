@@ -83,7 +83,11 @@ export default function Bar() {
       <Divider />
       <List>
         {[
-          { text: "Report Page", icon: <AssessmentIcon />, link: "/report" },
+          {
+            text: "Report Page",
+            icon: <AssessmentIcon />,
+            link: userType === "Admin" ? "/admin_report_page" : "/super_report_page",
+          },
           {
             text: "New Report",
             icon: <AddBoxIcon />,

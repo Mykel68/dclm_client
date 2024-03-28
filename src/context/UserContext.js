@@ -1,28 +1,28 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-const UserContext = createContext();
+export const UserContext = createContext();
 
-export const UserProvider = ({ user }) => {
-  const [userType, setUserType] = useState("");
-
+export const UserProvider = ({ children }) => {
+  const [userType, setUserType] = useState(null);
+  const [userSection, setUserSection] = useState(null);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserType(decodedToken.userType);
+      setUserSection(decodedToken.section);
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
+
   return (
-    <UserContext.Provider value={{ userType, setUserType }}>
-      {user}
+    <UserContext.Provider value={{ userType, userSection }}>
+      {children}
     </UserContext.Provider>
   );
 };
-
-export const useUser = () => useContext(UserContext);

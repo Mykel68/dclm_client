@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios"; // Make sure to use Axios instead of axios
+import Axios from "axios";
 import Bar from "../../../../components/Bar";
 import AdminCard from "../../../../components/AdminCard";
 import { Stack } from "@mui/material";
@@ -17,7 +17,9 @@ const AllAdmin = () => {
         `${process.env.REACT_APP_BACKEND_URL}/auth/getAllAdmin`
       );
       if (response.status === 200) {
-        setAdmins(response.data);
+        setAdmins(response.data.admin);
+      } else {
+        console.error("Error fetching admins. Status:", response.status);
       }
     } catch (error) {
       console.error("Error fetching admins:", error);
@@ -38,7 +40,7 @@ const AllAdmin = () => {
         }}
       >
         {admins.map((admin, index) => (
-          <AdminCard key={index} name={admin.name} />
+          <AdminCard key={index} name={admin.name} userType={admin.userType} />
         ))}
       </Stack>
     </div>

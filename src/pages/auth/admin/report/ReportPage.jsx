@@ -21,20 +21,23 @@ import {
 
 import Bar from "../../../../components/Bar";
 import ReportDetailsModal from "../../../../components/ReportDetailsModal";
+import useUserToken from "../../../../hooks/useUserToken";
 
 const ReportPage = () => {
   const [reports, setReports] = useState([]);
-  const [selectedReport, setSelectedReport] = useState();
+  const [selectedReport, setSelectedReport] = useState(null);
+
+  const { userSection } = useUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!userSection) return;
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/admin/getReport/${section}`
+          `${process.env.REACT_APP_BACKEND_URL}/admin/getReport/${userSection}`
         );
 
         if (response.status === 200) {
-          // Check if response.data is an array before attempting to reverse
           if (Array.isArray(response.data)) {
             setReports(response.data.reverse());
           } else {

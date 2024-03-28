@@ -16,6 +16,9 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userType !== "Super Admin") {
+      navigate("/admin");
+    }
     fetchAdminCount();
     fetchReportCount();
   }, []);

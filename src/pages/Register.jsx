@@ -47,7 +47,7 @@ const Register = () => {
       // Display success message
       toast.success("Registration successful! Redirecting to login...");
 
-      navigate("/login");
+      navigate("/super_admin");
     } catch (error) {
       console.error("Error:", error);
 
