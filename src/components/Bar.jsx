@@ -24,6 +24,7 @@ import { Button, Stack } from "@mui/material";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import HomeIcon from "@mui/icons-material/Home";
 import useUserToken from "../hooks/useUserToken";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 export default function Bar() {
   const [open, setOpen] = React.useState(false);
@@ -57,6 +58,7 @@ export default function Bar() {
           className="img"
           style={{ width: "40px", height: "40px", margin: "5px" }}
         />
+
         {userType}
       </Typography>
       {[
@@ -86,7 +88,10 @@ export default function Bar() {
           {
             text: "Report Page",
             icon: <AssessmentIcon />,
-            link: userType === "Admin" ? "/admin_report_page" : "/super_report_page",
+            link:
+              userType === "Admin"
+                ? "/admin_report_page"
+                : "/super_report_page",
           },
           {
             text: "New Report",
@@ -141,6 +146,29 @@ export default function Bar() {
           ))}
         </List>
       ) : null}
+      <Divider />
+      <List>
+        {[
+          {
+            text: "Profile",
+            icon: <ManageAccountsIcon />,
+            link: "/profile",
+          },
+        ].map((item, index) => (
+          <ListItem
+            key={index}
+            disablePadding
+            button
+            component={Link}
+            to={item.link}
+          >
+            <ListItemButton>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 

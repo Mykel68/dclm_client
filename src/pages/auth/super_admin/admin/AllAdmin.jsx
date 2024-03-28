@@ -3,10 +3,16 @@ import Axios from "axios";
 import Bar from "../../../../components/Bar";
 import AdminCard from "../../../../components/AdminCard";
 import { Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import useUserToken from "../../../../hooks/useUserToken";
 
 const AllAdmin = () => {
+  const { userType } = useUserToken();
   const [admins, setAdmins] = useState([]);
-
+  const navigate = useNavigate();
+  if (userType !== "Super admin") {
+    navigate("/admin");
+  }
   useEffect(() => {
     fetchAdmins();
   }, []);

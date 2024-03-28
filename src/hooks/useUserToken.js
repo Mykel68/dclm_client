@@ -1,23 +1,28 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const useUserToken = () => {
-  let userType;
-  let userSection;
+  const [userType, setUserType] = useState(null);
+  const [userSection, setUserSection] = useState(null);
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    userType = decodedToken.userType;
-    userSection = decodedToken.section;
-  } else {
-    navigate("/login");
-  }
-  if (userType !== "Super Admin") {
-    navigate("/admin");
-  }
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setUserType(decodedToken.userType);
+        setUserSection(decodedToken.section);
+      } else {
+        navigate("/login");
+      }
+    }
+  }, []);
 
   return { userType, userSection };
 };

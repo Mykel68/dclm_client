@@ -39,7 +39,6 @@ const Login = () => {
 
       // Redirect based on user role
       const decodedToken = jwtDecode(response.data.token);
-      console.log(decodedToken);
 
       if (decodedToken.userType === "Admin") {
         navigate("/admin");
